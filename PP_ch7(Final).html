@@ -1,0 +1,147 @@
+<html>
+<head>
+<title>OpenStreetMaps and GeoServer</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<script type='text/javascript' src='http://www.openlayers.org/api/OpenLayers.js'>      </script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<link rel="stylesheet" href="ol.css" type="text/css">
+</head>
+<body>
+<div id="map" class="smallmap"></div>
+    <script>
+    //Defining projections
+        var geographic = new OpenLayers.Projection("EPSG:4326");
+        var mercator = new OpenLayers.Projection("EPSG:900913");
+
+    //Defining bounds    
+        var world = new OpenLayers.Bounds(-180, -89, 180, 89).transform(
+            geographic, mercator
+        );
+    //Defining map center    
+        var lund_center = new OpenLayers.LonLat(100.566, 13.762).transform(
+            geographic, mercator
+        );
+
+        var options = {
+            projection: mercator,
+            displayProjection: geographic,
+            units: "m",
+            maxExtent: world,
+            maxResolution: 156543.0399,
+
+        };
+    //Defining main variables  
+        var map = new OpenLayers.Map("map", options, { controls: [] });
+        var osm = new OpenLayers.Layer.OSM();
+        map.addLayer(osm);
+
+    //List of layers 
+        var layer1 = new OpenLayers.Layer.WMS(
+            "ขอบเขตการปกครองอำเภอเมืองพิจิตร",
+            "http://localhost:8088/geoserver/Final_exam_Phichit/wms",
+            {layers: "Final_exam:Tam_Phichit", 
+            transparent: true}
+        );
+        map.addLayer(layer1);
+        ///////////////////////////////////////
+		var layer2 = new OpenLayers.Layer.WMS(
+            "เส้นทางน้ำ",
+            "http://localhost:8088/geoserver/Final_exam_Phichit/wms",
+            {layers: "Final_exam:stream_Phichit", 
+            transparent: true}
+        );
+        map.addLayer(layer2);
+		///////////////////////////////////////
+		var layer3 = new OpenLayers.Layer.WMS(
+            "ถนน",
+            "http://localhost:8088/geoserver/Final_exam_Phichit/wms",
+            {layers: "Final_exam:minor_road_lv1_Phichit", 
+            transparent: true}
+        );
+        map.addLayer(layer3);
+		///////////////////////////////////////
+		var layer4 = new OpenLayers.Layer.WMS(
+            "พื้นที่น้ำท่วม",
+            "http://localhost:8088/geoserver/Final_exam_Phichit/wms",
+            {layers: "Final_exam:flood_Phichit", 
+            transparent: true}
+        );
+        map.addLayer(layer4);
+		///////////////////////////////////////
+		var layer5 = new OpenLayers.Layer.WMS(
+            "เส้นทางรถไฟ",
+            "http://localhost:8088/geoserver/Final_exam_Phichit/wms",
+            {layers: "Final_exam:railway_Phichit", 
+            transparent: true}
+        );
+        map.addLayer(layer5);
+		///////////////////////////////////////
+		var layer6 = new OpenLayers.Layer.WMS(
+            "สถานศึกษา",
+            "http://localhost:8088/geoserver/Final_exam_Phichit/wms",
+            {layers: "Final_exam:education_Phichit", 
+            transparent: true}
+        );
+        map.addLayer(layer6);
+		///////////////////////////////////////		
+		var layer7 = new OpenLayers.Layer.WMS(
+            "ศาสนสถาน",
+            "http://localhost:8088/geoserver/Final_exam_Phichit/wms",
+            {layers: "Final_exam:religion_Phichit", 
+            transparent: true}
+        );
+        map.addLayer(layer7);
+		///////////////////////////////////////		
+		var layer8 = new OpenLayers.Layer.WMS(
+            "สถานีตรวจอากาศ",
+            "http://localhost:8088/geoserver/Final_exam_Phichit/wms",
+            {layers: "Final_exam:AWS_Station_Phichit", 
+            transparent: true}
+        );
+        map.addLayer(layer8);
+		///////////////////////////////////////		
+		var layer9 = new OpenLayers.Layer.WMS(
+            "ตลาด",
+            "http://localhost:8088/geoserver/Final_exam_Phichit/wms",
+            {layers: "Final_exam:Market_Phichit", 
+            transparent: true}
+        );
+        map.addLayer(layer9);
+		///////////////////////////////////////		
+		var layer10 = new OpenLayers.Layer.WMS(
+            "โรงพยาบาลส่งเสริมสุขภาพตำบล",
+            "http://localhost:8088/geoserver/Final_exam_Phichit/wms",
+            {layers: "Final_exam:Sanitation_Phichit", 
+            transparent: true}
+        );
+        map.addLayer(layer10);
+		///////////////////////////////////////		
+		var layer11 = new OpenLayers.Layer.WMS(
+            "หมู่บ้าน",
+            "http://localhost:8088/geoserver/Final_exam_Phichit/wms",
+            {layers: "Final_exam:VILLAGE_Phichit", 
+            transparent: true}
+        );
+        map.addLayer(layer11);
+		///////////////////////////////////////		
+		var layer12 = new OpenLayers.Layer.WMS(
+            "โรงพยาบาล",
+            "http://localhost:8088/geoserver/Final_exam_Phichit/wms",
+            {layers: "Final_exam:hospital_Phichit", 
+            transparent: true}
+        );
+        map.addLayer(layer12);
+		
+    //Map center and zoom
+        map.setCenter(lund_center, 11);
+
+    //List of controls    
+        map.addControl(new OpenLayers.Control.LayerSwitcher());
+        map.addControl(new OpenLayers.Control.KeyboardDefaults());          
+        map.addControl(new new OpenLayers.Control.Navigation());
+
+    //Coordinates of mouse position
+        map.addControl(new OpenLayers.Control.MousePosition());
+    </script>
+</body>
+</html>
